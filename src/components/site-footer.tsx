@@ -73,8 +73,7 @@ export function SiteFooter() {
 
       <div className="container-page flex flex-wrap items-center justify-between gap-4 border-t border-line py-6 font-sans text-xs text-muted">
         <p>
-          © {year} {profile.name.replace(/\.$/, "")}. Todos os direitos
-          reservados.
+          © {year} {profile.name.replace(/\.$/, "")}
         </p>
         <a
           href="#inicio"
