@@ -8,11 +8,9 @@ type ButtonLinkProps = React.AnchorHTMLAttributes<HTMLAnchorElement> & {
 };
 
 /**
- * Botão autoral "Kinetic Blade" (.shape-blade):
- * - Geometria assimétrica aerodinâmica (16px / 3px / 16px / 3px — nem pílula circular, nem quadrado comum)
- * - Cortina diagonal (-skew-x-12) que varre o botão no hover
- * - Efeito slot-machine 3D no texto (rola verticalmente ao passar o mouse)
- * - Compartimento técnico separado para o ícone à direita
+ * Botão autoral Dual-Clash Kinetic Blade:
+ * - Primário: Vermelho-Chama (#FF3D1F) que é varrido por Ciano Elétrico (#00E5FF) no hover
+ * - Secundário: Borda Ciano Elétrico (#00E5FF) que acende em Vermelho-Chama (#FF3D1F) no hover
  */
 export function ButtonLink({
   variant = "primary",
@@ -28,32 +26,21 @@ export function ButtonLink({
   const anchor = (
     <a
       className={cn(
-        "shape-blade group relative inline-flex min-h-12 items-stretch overflow-hidden border font-sans text-[13px] font-semibold tracking-tight transition-all duration-300 active:scale-[0.98]",
+        "shape-blade group relative inline-flex min-h-12 items-stretch overflow-hidden border font-sans text-[13px] font-bold tracking-tight transition-all duration-300 active:scale-[0.98]",
         isPrimary
-          ? "border-accent bg-accent text-accent-ink shadow-[0_0_28px_-10px_rgba(26,229,126,0.45)] hover:border-ink"
-          : "border-white/15 bg-surface/90 text-ink hover:border-accent/60",
+          ? "border-accent bg-accent text-white shadow-[0_10px_30px_-10px_rgba(255,61,31,0.55)] hover:border-accent-2 hover:shadow-[0_10px_30px_-10px_rgba(0,229,255,0.55)]"
+          : "border-accent-2/40 bg-surface/90 text-ink hover:border-accent hover:shadow-[0_10px_28px_-12px_rgba(255,61,31,0.45)]",
         className,
       )}
       {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       {...rest}
     >
-      {/* Cortina diagonal cinética no hover */}
+      {/* Cortina diagonal com a cor oposta (choque térmico no hover) */}
       <span
         aria-hidden="true"
         className={cn(
           "pointer-events-none absolute inset-0 -translate-x-[108%] -skew-x-12 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0",
-          isPrimary ? "bg-ink" : "bg-accent/15",
-        )}
-      />
-
-      {/* Micro-marcador técnico no canto superior direito (3px) */}
-      <span
-        aria-hidden="true"
-        className={cn(
-          "pointer-events-none absolute right-1 top-1 size-1.5 border-r border-t transition-colors duration-300",
-          isPrimary
-            ? "border-accent-ink/40"
-            : "border-accent/60 group-hover:border-accent",
+          isPrimary ? "bg-accent-2" : "bg-accent",
         )}
       />
 
@@ -67,7 +54,7 @@ export function ButtonLink({
             aria-hidden="true"
             className={cn(
               "absolute inset-0 block translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0",
-              isPrimary ? "text-accent-ink" : "text-accent",
+              isPrimary ? "text-accent-ink" : "text-white",
             )}
           >
             {children}
@@ -75,15 +62,15 @@ export function ButtonLink({
         </span>
       </span>
 
-      {/* Compartimento separado de ação do ícone */}
+      {/* Compartimento separado do ícone */}
       {icon && (
         <span
           aria-hidden="true"
           className={cn(
             "relative z-10 flex items-center justify-center border-l px-3.5 transition-colors duration-300",
             isPrimary
-              ? "border-accent-ink/15 bg-black/[0.06]"
-              : "border-white/10 bg-white/[0.02] text-accent group-hover:border-accent/40 group-hover:bg-accent group-hover:text-accent-ink",
+              ? "border-white/20 bg-black/15 text-white group-hover:border-accent-ink/20 group-hover:text-accent-ink"
+              : "border-accent-2/25 bg-accent-2/10 text-accent-2 group-hover:border-white/20 group-hover:bg-black/15 group-hover:text-white",
           )}
         >
           <span className="transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5">

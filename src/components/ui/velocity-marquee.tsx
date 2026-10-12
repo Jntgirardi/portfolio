@@ -17,8 +17,7 @@ type VelocityMarqueeProps = {
 };
 
 /**
- * Faixa cinética contemporânea:
- * Desliza continuamente e acelera/inclina suavemente conforme a velocidade do scroll.
+ * Faixa cinética em contraste duplo (Vermelho-Chama #FF3D1F × Ciano Elétrico #00E5FF)
  */
 export function VelocityMarquee({
   items,
@@ -76,8 +75,8 @@ export function VelocityMarquee({
       className={cn(
         "relative overflow-hidden border-y py-4 select-none",
         variant === "volt"
-          ? "border-accent/25 bg-[#06110b] text-ink"
-          : "border-line bg-surface/80 text-ink/90",
+          ? "border-accent bg-accent text-white"
+          : "border-accent-2/30 bg-[#07111a] text-ink",
         className,
       )}
     >
@@ -88,18 +87,25 @@ export function VelocityMarquee({
         {repeated.map((text, idx) => (
           <span
             key={idx}
-            className="inline-flex items-center gap-8 font-display text-lg font-semibold tracking-tight sm:text-xl"
+            className="inline-flex items-center gap-8 font-display text-lg font-bold uppercase tracking-tight sm:text-xl"
           >
             <span
               className={
-                variant === "volt" && idx % 2 === 1
-                  ? "text-accent"
-                  : "text-ink/90"
+                variant === "volt"
+                  ? "text-white"
+                  : idx % 2 === 1
+                    ? "text-accent-2"
+                    : "text-ink"
               }
             >
               {text}
             </span>
-            <span className="inline-block size-1.5 rounded-full bg-accent" />
+            <span
+              className={cn(
+                "inline-block size-2 rotate-45",
+                variant === "volt" ? "bg-accent-2" : "bg-accent",
+              )}
+            />
           </span>
         ))}
       </div>
