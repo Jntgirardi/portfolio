@@ -6,12 +6,6 @@ import { skillGroups } from "@/content/profile";
 import { cn } from "@/lib/site";
 import { Fill } from "./ui/fill";
 
-/**
- * Matriz Cinética de Competências em Faixas Horizontais (Substitui o grid de 6 cards):
- * - Zero caixas/cards repetitivos: faixas arquitetônicas full-width separadas por linhas de 1px
- * - Varredura diagonal esmeralda no hover + números vazados (.stroke-display)
- * - Filtro superior com geometria assimétrica (.shape-blade-sm)
- */
 export function SkillsGrid() {
   const [selected, setSelected] = useState<number | "all">("all");
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
@@ -21,20 +15,21 @@ export function SkillsGrid() {
     .filter(({ index }) => selected === "all" || selected === index);
 
   const chips: Array<{ value: number | "all"; label: string }> = [
-    { value: "all", label: " Matriz Completa" },
+    { value: "all", label: "Todas as áreas" },
     ...skillGroups.map((g, i) => ({ value: i, label: g.name })),
   ];
 
   return (
     <div>
-      {/* Barra de filtros assimétrica (.shape-blade-sm) */}
+      {/* Barra de filtros assimétrica alternando Flame e Cyan */}
       <div
         role="group"
         aria-label="Filtrar competências por domínio"
         className="mb-12 flex flex-wrap gap-2"
       >
-        {chips.map((chip) => {
+        {chips.map((chip, idx) => {
           const isActive = selected === chip.value;
+          const isCyan = idx % 2 === 1;
           return (
             <button
               key={String(chip.value)}
@@ -42,16 +37,21 @@ export function SkillsGrid() {
               aria-pressed={isActive}
               onClick={() => setSelected(chip.value)}
               className={cn(
-                "shape-blade-sm relative min-h-10 border px-4 py-2 font-sans text-xs font-medium tracking-tight transition-colors duration-300",
+                "shape-blade-sm relative min-h-10 border px-4 py-2 font-sans text-xs font-bold tracking-tight transition-colors duration-300",
                 isActive
-                  ? "border-accent font-semibold text-accent-ink"
-                  : "border-white/12 bg-surface/70 text-muted hover:border-accent/45 hover:text-ink",
+                  ? isCyan
+                    ? "border-accent-2 text-accent-ink"
+                    : "border-accent text-white"
+                  : "border-white/12 bg-surface/80 text-muted hover:border-accent-2/50 hover:text-ink",
               )}
             >
               {isActive && (
                 <motion.span
                   layoutId="skill-chip"
-                  className="shape-blade-sm absolute inset-0 z-0 bg-accent"
+                  className={cn(
+                    "shape-blade-sm absolute inset-0 z-0",
+                    isCyan ? "bg-accent-2" : "bg-accent",
+                  )}
                   transition={{ type: "spring", stiffness: 400, damping: 32 }}
                 />
               )}
@@ -61,7 +61,7 @@ export function SkillsGrid() {
         })}
       </div>
 
-      {/* Faixas cinéticas horizontais full-width (Zero cards em grid) */}
+      {/* Faixas cinéticas horizontais alternando Vermelho-Chama e Ciano Elétrico */}
       <motion.ul
         layout
         className="divide-y divide-white/10 border-y border-white/10"
@@ -69,6 +69,7 @@ export function SkillsGrid() {
         <AnimatePresence mode="popLayout" initial={false}>
           {visible.map(({ group, index }) => {
             const isHovered = hoveredIdx === index;
+            const isCyan = index % 2 === 1;
             return (
               <motion.li
                 key={index}
@@ -81,20 +82,27 @@ export function SkillsGrid() {
                 onPointerLeave={() => setHoveredIdx(null)}
                 className="group relative overflow-hidden py-8 transition-colors duration-500 md:py-10"
               >
-                {/* Cortina luminosa diagonal no hover */}
+                {/* Cortina luminosa em contraste duplo no hover */}
                 <span
                   aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-accent/[0.06] via-accent/[0.03] to-transparent transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0"
+                  className={cn(
+                    "pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r to-transparent transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0",
+                    isCyan
+                      ? "from-accent-2/[0.1] via-accent/[0.04]"
+                      : "from-accent/[0.1] via-accent-2/[0.04]",
+                  )}
                 />
 
                 {/* Barra lateral ativa */}
                 <span
                   aria-hidden="true"
-                  className="pointer-events-none absolute inset-y-0 left-0 w-1 origin-top scale-y-0 bg-accent transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-y-100"
+                  className={cn(
+                    "pointer-events-none absolute inset-y-0 left-0 w-1 origin-top scale-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-y-100",
+                    isCyan ? "bg-accent-2" : "bg-accent",
+                  )}
                 />
 
                 <div className="relative z-10 grid gap-6 md:grid-cols-12 md:items-center md:gap-8 md:pl-5">
-                  {/* Coluna 1: Índice vazado + Nome do domínio */}
                   <div className="flex items-baseline gap-4 md:col-span-5">
                     <span
                       aria-hidden="true"
@@ -103,7 +111,14 @@ export function SkillsGrid() {
                       0{index + 1}
                     </span>
                     <div>
-                      <h3 className="font-display text-2xl font-bold tracking-tight text-ink transition-transform duration-300 group-hover:translate-x-1.5 group-hover:text-accent sm:text-3xl">
+                      <h3
+                        className={cn(
+                          "font-display text-2xl font-bold tracking-tight text-ink transition-transform duration-300 group-hover:translate-x-1.5 sm:text-3xl",
+                          isCyan
+                            ? "group-hover:text-accent-2"
+                            : "group-hover:text-accent",
+                        )}
+                      >
                         <Fill>{group.name}</Fill>
                       </h3>
                       {group.description && (
@@ -117,16 +132,17 @@ export function SkillsGrid() {
                     </div>
                   </div>
 
-                  {/* Coluna 2: Tags técnicas com corte assimétrico .shape-blade-sm */}
-                  <div className="md:col-span-6">
+                  <div className="md:col-span-7">
                     <ul className="flex flex-wrap gap-2">
                       {group.items.map((item, i) => (
                         <li key={`${item}-${i}`}>
                           <Fill
                             className={cn(
-                              "shape-blade-sm inline-block border px-3.5 py-1.5 font-mono text-xs transition-all duration-300",
+                              "shape-blade-sm inline-block border px-3.5 py-1.5 font-sans text-xs font-semibold transition-all duration-300",
                               isHovered
-                                ? "border-accent/45 bg-accent/10 text-ink hover:bg-accent hover:text-accent-ink"
+                                ? i % 2 === 1
+                                  ? "border-accent-2/60 bg-accent-2/15 text-ink hover:bg-accent-2 hover:text-accent-ink"
+                                  : "border-accent/60 bg-accent/15 text-ink hover:bg-accent hover:text-white"
                                 : "border-white/12 bg-surface/80 text-ink/90",
                             )}
                           >
@@ -135,13 +151,6 @@ export function SkillsGrid() {
                         </li>
                       ))}
                     </ul>
-                  </div>
-
-                  {/* Coluna 3: Contador técnico */}
-                  <div className="hidden justify-end md:col-span-1 md:flex">
-                    <span className="font-mono text-xs text-muted transition-colors group-hover:text-accent">
-                      [{String(group.items.length).padStart(2, "0")}]
-                    </span>
                   </div>
                 </div>
               </motion.li>

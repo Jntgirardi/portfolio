@@ -21,13 +21,6 @@ const details: Array<{
   { key: "contribution", label: "Arquitetura & Contribuição", code: "03" },
 ];
 
-/**
- * Vitrine de projeto em formato de palco aberto (sem cards dentro de cards):
- * - Índice monumental vazado (.stroke-display) que preenche em verde esmeralda no hover
- * - Visualizador 3D de telemetria reativo ao mouse com corte assimétrico (.shape-blade)
- * - Seletor interativo de especificações + linhas arquitetônicas abertas
- * - Botões autorais Kinetic Blade
- */
 export function ProjectCard({
   project,
   index,
@@ -43,6 +36,8 @@ export function ProjectCard({
   const [activeTab, setActiveTab] = useState<
     "all" | "context" | "goal" | "contribution"
   >("all");
+
+  const isCyanTheme = index % 2 === 1;
 
   function onPointerMove(e: React.PointerEvent<HTMLDivElement>) {
     if (e.pointerType !== "mouse" || !visualRef.current) return;
@@ -95,10 +90,10 @@ export function ProjectCard({
       aria-labelledby={titleId}
       className="group relative border-t border-white/12 pt-12 transition-colors duration-500 md:pt-16"
     >
-      {/* Linha de laser superior que varre horizontalmente no hover */}
+      {/* Linha de laser superior em gradiente Flame -> Cyan */}
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 -top-px h-[2px] origin-left scale-x-0 bg-accent transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100"
+        className="pointer-events-none absolute inset-x-0 -top-px h-[2px] origin-left scale-x-0 bg-gradient-to-r from-accent via-[#ff7a00] to-accent-2 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100"
       />
 
       {/* Cabeçalho aberto do projeto */}
@@ -111,9 +106,11 @@ export function ProjectCard({
             {number}
           </span>
           <div>
-            <div className="mb-2 flex flex-wrap items-center gap-2.5 font-mono text-[11px] uppercase tracking-[0.18em] text-accent">
-              <span>{project.kind}</span>
-              <span className="text-white/20">/</span>
+            <div className="mb-2 flex flex-wrap items-center gap-2.5 font-sans text-xs font-bold uppercase tracking-wider">
+              <span className={isCyanTheme ? "text-accent-2" : "text-accent"}>
+                {project.kind}
+              </span>
+              <span className="text-white/25">×</span>
               <span className="text-muted">{project.period}</span>
             </div>
             <h3
@@ -125,7 +122,7 @@ export function ProjectCard({
           </div>
         </div>
 
-        {/* Seletor interativo de leitura da arquitetura */}
+        {/* Seletor interativo em duas cores */}
         <div
           role="group"
           aria-label={`Explorar detalhes de ${project.title}`}
@@ -146,16 +143,21 @@ export function ProjectCard({
                 type="button"
                 onClick={() => setActiveTab(tab.id)}
                 className={cn(
-                  "shape-blade-sm relative px-3.5 py-1.5 font-sans text-xs font-medium transition-colors duration-300",
+                  "shape-blade-sm relative px-3.5 py-1.5 font-sans text-xs font-bold transition-colors duration-300",
                   isSelected
-                    ? "font-semibold text-accent-ink"
-                    : "border border-white/10 bg-surface/60 text-muted hover:border-accent/40 hover:text-ink",
+                    ? isCyanTheme
+                      ? "text-accent-ink"
+                      : "text-white"
+                    : "border border-white/12 bg-surface/70 text-muted hover:border-accent-2/50 hover:text-ink",
                 )}
               >
                 {isSelected && (
                   <motion.span
                     layoutId={`proj-tab-${project.slug}`}
-                    className="shape-blade-sm absolute inset-0 z-0 bg-accent"
+                    className={cn(
+                      "shape-blade-sm absolute inset-0 z-0",
+                      isCyanTheme ? "bg-accent-2" : "bg-accent",
+                    )}
                     transition={{ type: "spring", stiffness: 400, damping: 30 }}
                   />
                 )}
@@ -166,9 +168,8 @@ export function ProjectCard({
         </div>
       </div>
 
-      {/* Palco dividido em 2 colunas sem caixas aninhadas */}
+      {/* Palco dividido em 2 colunas */}
       <div className="grid gap-12 lg:grid-cols-12 lg:gap-14">
-        {/* Coluna esquerda: Resumo + Visualizador 3D interativo + Ações */}
         <div className="flex flex-col justify-between lg:col-span-5">
           <div>
             <Fill
@@ -178,18 +179,21 @@ export function ProjectCard({
               {project.summary}
             </Fill>
 
-            {/* Palco visual 3D interativo ao mouse */}
+            {/* Palco visual 3D Dual-Clash */}
             <div
               ref={visualRef}
               onPointerMove={onPointerMove}
               onPointerLeave={onPointerLeave}
               data-cursor-label="INTERAGIR 3D"
-              className="shape-blade telemetry-grid relative mt-8 flex aspect-[16/9] items-center justify-center overflow-hidden border border-white/12 bg-[#080a0d] p-6 will-change-transform"
+              className="shape-blade telemetry-grid relative mt-8 flex aspect-[16/9] items-center justify-center overflow-hidden border border-white/15 bg-[#090a12] p-6 will-change-transform"
             >
               <div
                 ref={glowRef}
                 aria-hidden="true"
-                className="pointer-events-none absolute left-0 top-0 size-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/15 opacity-0 blur-2xl"
+                className={cn(
+                  "pointer-events-none absolute left-0 top-0 size-72 -translate-x-1/2 -translate-y-1/2 rounded-full opacity-0 blur-2xl",
+                  isCyanTheme ? "bg-accent-2/20" : "bg-accent/20",
+                )}
               />
 
               {project.image ? (
@@ -203,36 +207,37 @@ export function ProjectCard({
               ) : (
                 <svg
                   viewBox="0 0 400 160"
-                  className="relative z-10 w-full opacity-85"
+                  className="relative z-10 w-full opacity-90"
                   fill="none"
                   aria-hidden="true"
                 >
                   <path
                     d="M 15 125 Q 90 15, 175 90 T 325 40 T 385 80"
-                    stroke="#1ae57e"
-                    strokeWidth="2.2"
+                    stroke="#ff3d1f"
+                    strokeWidth="2.4"
                     strokeDasharray="10 6"
                     className="animate-dash"
                   />
                   <path
                     d="M 15 140 Q 115 60, 205 110 T 385 55"
-                    stroke="#6ef9b0"
-                    strokeWidth="1.25"
-                    strokeOpacity="0.45"
+                    stroke="#00e5ff"
+                    strokeWidth="1.75"
+                    strokeOpacity="0.8"
                   />
-                  <circle cx="175" cy="90" r="4.5" fill="#1ae57e" />
-                  <circle cx="325" cy="40" r="4.5" fill="#6ef9b0" />
+                  <circle cx="175" cy="90" r="5" fill="#ff3d1f" />
+                  <circle cx="325" cy="40" r="5" fill="#00e5ff" />
                 </svg>
               )}
 
-              <div className="absolute inset-x-4 bottom-3 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.2em] text-muted/70">
-                <span>SYS // {project.slug.toUpperCase()}</span>
-                <span className="text-accent">LIVE TRACE</span>
+              <div className="absolute inset-x-4 bottom-3 flex items-center justify-between font-display text-[11px] font-bold uppercase tracking-wider">
+                <span className="text-ink/80">{project.title}</span>
+                <span className={isCyanTheme ? "text-accent-2" : "text-accent"}>
+                  {project.period}
+                </span>
               </div>
             </div>
           </div>
 
-          {/* Botões Kinetic Blade */}
           <div className="mt-8 flex flex-wrap items-center gap-3.5 pt-2">
             {project.links.demo && (
               <ButtonLink
@@ -259,11 +264,11 @@ export function ProjectCard({
           </div>
         </div>
 
-        {/* Coluna direita: Linhas editoriais abertas (zero cards aninhados) */}
+        {/* Coluna direita: Linhas editoriais abertas */}
         <div className="flex flex-col justify-between lg:col-span-7">
           <div className="divide-y divide-white/10 border-y border-white/10">
             <AnimatePresence mode="popLayout" initial={false}>
-              {visibleDetails.map(({ key, label, code }) => (
+              {visibleDetails.map(({ key, label, code }, i) => (
                 <motion.div
                   key={key}
                   layout
@@ -274,10 +279,15 @@ export function ProjectCard({
                   className="group/row grid gap-3 py-5 sm:grid-cols-12 sm:gap-6"
                 >
                   <div className="flex items-baseline gap-2.5 sm:col-span-4">
-                    <span className="font-mono text-[11px] text-accent">
-                      /{code}
+                    <span
+                      className={cn(
+                        "font-display text-xs font-bold",
+                        i % 2 === 1 ? "text-accent-2" : "text-accent",
+                      )}
+                    >
+                      {code}
                     </span>
-                    <h4 className="font-display text-sm font-bold uppercase tracking-wider text-ink transition-colors group-hover/row:text-accent">
+                    <h4 className="font-display text-sm font-bold uppercase tracking-wider text-ink transition-colors group-hover/row:text-accent-2">
                       {label}
                     </h4>
                   </div>
@@ -294,18 +304,20 @@ export function ProjectCard({
             </AnimatePresence>
           </div>
 
-          {/* Entregas e Stack em layout aberto */}
           <div className="mt-8 grid gap-8 sm:grid-cols-12">
             <div className="sm:col-span-7">
-              <h4 className="eyebrow mb-4 text-accent">
-                {"// RESULTADOS E IMPACTO"}
+              <h4 className="mb-4 font-sans text-xs font-bold uppercase tracking-wider text-accent">
+                Resultados e entregas
               </h4>
               <ul className="space-y-3 font-sans text-sm leading-relaxed text-ink/90">
                 {project.results.map((r, i) => (
                   <li key={i} className="flex items-start gap-3">
                     <span
                       aria-hidden="true"
-                      className="mt-1.5 size-1.5 shrink-0 rotate-45 bg-accent"
+                      className={cn(
+                        "mt-1.5 size-2 shrink-0 rotate-45",
+                        i % 2 === 1 ? "bg-accent-2" : "bg-accent",
+                      )}
                     />
                     <Fill>{r}</Fill>
                   </li>
@@ -314,11 +326,20 @@ export function ProjectCard({
             </div>
 
             <div className="sm:col-span-5">
-              <h4 className="eyebrow mb-4 text-accent">{"// STACK TÉCNICA"}</h4>
+              <h4 className="mb-4 font-sans text-xs font-bold uppercase tracking-wider text-accent-2">
+                Stack utilizada
+              </h4>
               <ul className="flex flex-wrap gap-2">
                 {project.stack.map((tech, i) => (
                   <li key={`${tech}-${i}`}>
-                    <Fill className="shape-blade-sm inline-block border border-white/12 bg-surface px-3 py-1 font-mono text-xs text-ink/90 transition-all duration-300 hover:-translate-y-0.5 hover:border-accent/60 hover:text-accent">
+                    <Fill
+                      className={cn(
+                        "shape-blade-sm inline-block border bg-surface px-3 py-1 font-sans text-xs font-semibold text-ink transition-all duration-300 hover:-translate-y-0.5",
+                        i % 2 === 1
+                          ? "border-accent-2/35 hover:border-accent-2 hover:text-accent-2"
+                          : "border-accent/35 hover:border-accent hover:text-accent",
+                      )}
+                    >
                       {tech}
                     </Fill>
                   </li>
