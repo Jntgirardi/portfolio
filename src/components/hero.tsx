@@ -2,8 +2,8 @@
 
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ArrowDown, ArrowUpRight, Sparkles } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { ArrowDown, ArrowUpRight, Zap } from "lucide-react";
+import { useEffect, useRef } from "react";
 import { profile } from "@/content/profile";
 import { ButtonLink } from "./ui/button-link";
 import { Fill } from "./ui/fill";
@@ -23,7 +23,8 @@ export function Hero() {
   const line1Ref = useRef<HTMLSpanElement>(null);
   const line2Ref = useRef<HTMLSpanElement>(null);
   const coreRef = useRef<HTMLDivElement>(null);
-  const [coords, setCoords] = useState({ x: "0512", y: "0384" });
+  const orbFlameRef = useRef<HTMLDivElement>(null);
+  const orbCyanRef = useRef<HTMLDivElement>(null);
 
   const [first, last] = splitName(profile.name);
 
@@ -94,18 +95,30 @@ export function Hero() {
       const rect = section.getBoundingClientRect();
       const nx = (e.clientX - rect.left) / rect.width - 0.5;
       const ny = (e.clientY - rect.top) / rect.height - 0.5;
-      setCoords({
-        x: String(Math.round(e.clientX)).padStart(4, "0"),
-        y: String(Math.round(e.clientY)).padStart(4, "0"),
-      });
       if (coreRef.current) {
         gsap.to(coreRef.current, {
-          rotateY: nx * 26,
-          rotateX: -ny * 26,
-          x: nx * 32,
-          y: ny * 24,
+          rotateY: nx * 28,
+          rotateX: -ny * 28,
+          x: nx * 36,
+          y: ny * 26,
           duration: 0.8,
           ease: "power3.out",
+        });
+      }
+      if (orbFlameRef.current) {
+        gsap.to(orbFlameRef.current, {
+          x: nx * -90,
+          y: ny * -70,
+          duration: 1.2,
+          ease: "power2.out",
+        });
+      }
+      if (orbCyanRef.current) {
+        gsap.to(orbCyanRef.current, {
+          x: nx * 90,
+          y: ny * 70,
+          duration: 1.2,
+          ease: "power2.out",
         });
       }
     };
@@ -124,12 +137,20 @@ export function Hero() {
       aria-labelledby="hero-title"
       className="telemetry-grid relative flex min-h-dvh flex-col justify-between overflow-hidden pt-24 pb-10 md:pt-28 md:pb-12"
     >
-      {/* Formas vetoriais 3D reativas ao ponteiro */}
+      {/* Atmosfera viva em duas cores opostas (#FF3D1F Flame × #00E5FF Cyan) + escultura vetorial 3D */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden"
       >
-        <div className="size-[34rem] rounded-full bg-accent/[0.045] blur-[140px]" />
+        <div
+          ref={orbFlameRef}
+          className="absolute -left-24 top-1/4 size-[30rem] rounded-full bg-accent/[0.11] blur-[150px]"
+        />
+        <div
+          ref={orbCyanRef}
+          className="absolute -right-24 bottom-1/4 size-[30rem] rounded-full bg-accent-2/[0.11] blur-[150px]"
+        />
+
         <div
           ref={coreRef}
           style={{ transformStyle: "preserve-3d" }}
@@ -137,14 +158,14 @@ export function Hero() {
         >
           <svg
             viewBox="0 0 600 600"
-            className="size-full opacity-50"
+            className="size-full opacity-65"
             fill="none"
           >
             <circle
               cx="300"
               cy="300"
               r="275"
-              stroke="rgba(255,255,255,0.05)"
+              stroke="rgba(255,255,255,0.06)"
               strokeWidth="1"
               strokeDasharray="4 8"
             />
@@ -152,9 +173,9 @@ export function Hero() {
               cx="300"
               cy="300"
               r="235"
-              stroke="#1ae57e"
-              strokeOpacity="0.32"
-              strokeWidth="1.25"
+              stroke="#00e5ff"
+              strokeOpacity="0.45"
+              strokeWidth="1.5"
               strokeDasharray="90 30 15 30"
               className="animate-dash"
             />
@@ -162,70 +183,50 @@ export function Hero() {
               cx="300"
               cy="300"
               r="185"
-              stroke="rgba(255,255,255,0.07)"
-              strokeWidth="1"
+              stroke="#ff3d1f"
+              strokeOpacity="0.3"
+              strokeWidth="1.25"
+              strokeDasharray="40 20"
             />
             <path
               d="M95 290 C 155 160, 445 160, 505 290 C 445 365, 155 365, 95 290 Z"
-              stroke="#1ae57e"
-              strokeWidth="1.75"
-              strokeOpacity="0.55"
-              fill="rgba(26,229,126,0.02)"
+              stroke="#ff3d1f"
+              strokeWidth="2"
+              strokeOpacity="0.65"
+              fill="rgba(255,61,31,0.03)"
             />
             <path
               d="M135 290 C 190 205, 410 205, 465 290 C 410 335, 190 335, 135 290 Z"
-              stroke="#6ef9b0"
-              strokeWidth="1.15"
-              strokeOpacity="0.38"
+              stroke="#00e5ff"
+              strokeWidth="1.5"
+              strokeOpacity="0.55"
               strokeDasharray="12 8"
               className="animate-dash"
-            />
-            <line
-              x1="300"
-              y1="10"
-              x2="300"
-              y2="590"
-              stroke="rgba(26,229,126,0.09)"
-              strokeWidth="1"
-            />
-            <line
-              x1="10"
-              y1="300"
-              x2="590"
-              y2="300"
-              stroke="rgba(26,229,126,0.09)"
-              strokeWidth="1"
             />
           </svg>
         </div>
       </div>
 
-      {/* Barra superior com telemetria interativa do mouse + posicionamento Full Stack */}
-      <div className="container-page relative z-10 flex flex-wrap items-center justify-between gap-4 border-b border-white/[0.06] pb-4">
+      {/* Topo expressivo do Hero (sem aparência de painel de alarmes) */}
+      <div className="container-page relative z-10 flex flex-wrap items-center justify-between gap-4 border-b border-white/[0.08] pb-4">
         <div data-hero-fade className="flex flex-wrap items-center gap-3">
-          <span className="shape-blade-sm inline-flex items-center gap-2 border border-accent/40 bg-accent/10 px-3.5 py-1.5 font-sans text-xs font-semibold tracking-tight text-accent">
-            <Sparkles className="size-3.5" aria-hidden="true" />
+          <span className="shape-blade-sm inline-flex items-center gap-2 border border-accent/50 bg-accent/15 px-3.5 py-1.5 font-sans text-xs font-bold tracking-tight text-white">
+            <Zap className="size-3.5 text-accent-2" aria-hidden="true" />
             <span>{profile.role}</span>
           </span>
         </div>
 
         <div
           data-hero-fade
-          aria-hidden="true"
-          className="hidden items-center gap-5 font-mono text-[11px] text-muted sm:flex"
+          className="hidden items-center gap-3 font-sans text-xs font-semibold text-muted sm:flex"
         >
-          <span>
-            POS <strong className="text-accent">{coords.x}</strong> :{" "}
-            <strong className="text-accent">{coords.y}</strong>
-          </span>
-          <span className="text-white/15">|</span>
-          <span className="font-sans text-xs font-medium">
-            UNIFAN · {profile.location}
-          </span>
+          <span className="text-accent-2">UNIFAN · 5º Semestre</span>
+          <span className="text-accent">×</span>
+          <span className="text-ink/90">{profile.location}</span>
         </div>
       </div>
 
-      {/* Título Cinético Monumental */}
+      {/* Título Cinético Monumental com contraste Flame × Cyan */}
       <div className="container-page relative z-10 my-auto py-8 md:py-12">
         <h1
           id="hero-title"
@@ -243,7 +244,7 @@ export function Hero() {
                 <span
                   key={idx}
                   data-hero-char
-                  className="inline-block transition-transform duration-300 hover:-translate-y-1.5 will-change-transform"
+                  className="inline-block transition-all duration-300 hover:-translate-y-2 hover:text-accent-2 will-change-transform"
                 >
                   {ch}
                 </span>
@@ -253,14 +254,14 @@ export function Hero() {
           <span
             ref={line2Ref}
             aria-hidden="true"
-            className="block overflow-hidden pb-[0.06em] text-accent sm:pl-[6vw] will-change-transform"
+            className="block overflow-hidden pb-[0.06em] sm:pl-[6vw] will-change-transform"
           >
             <span className="inline-flex flex-wrap">
               {last.split("").map((ch, idx) => (
                 <span
                   key={idx}
                   data-hero-char
-                  className="text-accent-sheen inline-block transition-transform duration-300 hover:-translate-y-1.5 will-change-transform"
+                  className="text-accent-sheen inline-block transition-transform duration-300 hover:-translate-y-2 will-change-transform"
                 >
                   {ch === " " ? "\u00A0" : ch}
                 </span>
@@ -295,25 +296,25 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Rodapé de telemetria do Hero */}
-      <div className="container-page relative z-10 flex flex-wrap items-center justify-between gap-4 border-t border-white/[0.06] pt-5 font-sans text-xs font-medium text-muted">
-        <div data-hero-fade className="flex items-center gap-2.5">
-          <span className="relative flex size-2" aria-hidden="true">
-            <span className="absolute inline-flex size-full animate-ping rounded-full bg-accent opacity-75" />
-            <span className="relative inline-flex size-2 rotate-45 bg-accent" />
-          </span>
-          <Fill className="text-ink/90">{profile.availability}</Fill>
+      {/* Rodapé vivo do Hero */}
+      <div className="container-page relative z-10 flex flex-wrap items-center justify-between gap-4 border-t border-white/[0.08] pt-5 font-sans text-xs font-semibold text-muted">
+        <div data-hero-fade className="flex items-center gap-3">
+          <span
+            aria-hidden="true"
+            className="inline-block h-2 w-5 -skew-x-12 bg-gradient-to-r from-accent to-accent-2"
+          />
+          <Fill className="text-ink">{profile.availability}</Fill>
         </div>
 
         <a
           data-hero-fade
           href="#sobre"
-          className="group hidden items-center gap-2 text-muted transition-colors hover:text-ink sm:flex"
+          className="group hidden items-center gap-2 text-ink transition-colors hover:text-accent-2 sm:flex"
         >
           <span>Role para explorar</span>
           <ArrowDown
             aria-hidden="true"
-            className="size-3.5 text-accent transition-transform duration-500 group-hover:translate-y-1"
+            className="size-3.5 text-accent transition-transform duration-500 group-hover:translate-y-1 group-hover:text-accent-2"
           />
         </a>
       </div>
