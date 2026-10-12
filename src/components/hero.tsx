@@ -67,6 +67,17 @@ export function Hero() {
         },
       );
 
+      if (coreRef.current) {
+        gsap.to(coreRef.current, {
+          y: -14,
+          rotateZ: 4,
+          duration: 4.2,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+        });
+      }
+
       if (line1Ref.current && line2Ref.current) {
         gsap.to(line1Ref.current, {
           xPercent: -9,
@@ -135,7 +146,7 @@ export function Hero() {
       id="inicio"
       ref={sectionRef}
       aria-labelledby="hero-title"
-      className="telemetry-grid relative flex min-h-dvh flex-col justify-between overflow-hidden pt-24 pb-10 md:pt-28 md:pb-12"
+      className="telemetry-grid relative flex min-h-dvh flex-col justify-between overflow-hidden pt-20 pb-8 md:pt-28 md:pb-12"
     >
       {/* Atmosfera viva em duas cores opostas (#FF3D1F Flame × #00E5FF Cyan) + escultura vetorial 3D */}
       <div
@@ -154,7 +165,7 @@ export function Hero() {
         <div
           ref={coreRef}
           style={{ transformStyle: "preserve-3d" }}
-          className="relative flex size-[22rem] items-center justify-center sm:size-[30rem] md:size-[38rem]"
+          className="relative flex size-[20rem] items-center justify-center sm:size-[30rem] md:size-[38rem]"
         >
           <svg
             viewBox="0 0 600 600"
@@ -208,17 +219,17 @@ export function Hero() {
       </div>
 
       {/* Topo expressivo do Hero (sem aparência de painel de alarmes) */}
-      <div className="container-page relative z-10 flex flex-wrap items-center justify-between gap-4 border-b border-white/[0.08] pb-4">
+      <div className="container-page relative z-10 flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.08] pb-4">
         <div data-hero-fade className="flex flex-wrap items-center gap-3">
-          <span className="shape-blade-sm inline-flex items-center gap-2 border border-accent/50 bg-accent/15 px-3.5 py-1.5 font-sans text-xs font-bold tracking-tight text-white">
-            <Zap className="size-3.5 text-accent-2" aria-hidden="true" />
+          <span className="shape-blade-sm inline-flex items-center gap-2 border border-accent/50 bg-accent/15 px-3 py-1.5 font-sans text-[11px] font-bold tracking-tight text-white sm:px-3.5 sm:text-xs">
+            <Zap className="size-3.5 shrink-0 text-accent-2" aria-hidden="true" />
             <span>{profile.role}</span>
           </span>
         </div>
 
         <div
           data-hero-fade
-          className="hidden items-center gap-3 font-sans text-xs font-semibold text-muted sm:flex"
+          className="flex flex-wrap items-center gap-2 font-sans text-[11px] font-semibold text-muted sm:gap-3 sm:text-xs"
         >
           <span className="text-accent-2">UNIFAN · 5º Semestre</span>
           <span className="text-accent">×</span>
@@ -227,11 +238,11 @@ export function Hero() {
       </div>
 
       {/* Título Cinético Monumental com contraste Flame × Cyan */}
-      <div className="container-page relative z-10 my-auto py-8 md:py-12">
+      <div className="container-page relative z-10 my-auto py-6 md:py-12">
         <h1
           id="hero-title"
           aria-label={profile.name}
-          className="font-display text-[clamp(2.85rem,9.2vw,8.25rem)] font-bold leading-[0.94] tracking-[-0.04em] select-none"
+          className="font-display text-[clamp(2.45rem,9.2vw,8.25rem)] font-bold leading-[0.94] tracking-[-0.04em] select-none"
         >
           <span className="sr-only">{profile.name}</span>
           <span

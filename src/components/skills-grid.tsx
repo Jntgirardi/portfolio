@@ -80,6 +80,9 @@ export function SkillsGrid() {
                 transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
                 onPointerEnter={() => setHoveredIdx(index)}
                 onPointerLeave={() => setHoveredIdx(null)}
+                onClick={() =>
+                  setHoveredIdx((prev) => (prev === index ? null : index))
+                }
                 className="group relative overflow-hidden py-8 transition-colors duration-500 md:py-10"
               >
                 {/* Cortina luminosa em contraste duplo no hover */}

@@ -145,7 +145,7 @@ export function SiteHeader() {
               />
             </svg>
 
-            <div className="hidden h-4 overflow-hidden font-display text-xs font-bold uppercase tracking-wider sm:block">
+            <div className="block h-4 overflow-hidden font-display text-[11px] font-bold uppercase tracking-wider sm:text-xs">
               <div className="flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-4">
                 <span className="flex h-4 items-center gap-1.5 text-ink">
                   <span>GIRARDI</span>
