@@ -11,12 +11,19 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-const PRELOADER_INLINE_SCRIPT = `(function(){try{var nav=performance.getEntriesByType&&performance.getEntriesByType("navigation")[0];var isReload=(nav&&nav.type==="reload")||sessionStorage.getItem("jg_intro")==="1";if(isReload){document.documentElement.setAttribute("data-reloaded","true");return;}sessionStorage.setItem("jg_intro","1");var el=document.getElementById("jg-counter");if(!el)return;var start=performance.now(),dur=1150;function tick(now){var p=Math.min(1,(now-start)/dur);var ease=p<0.5?2*p*p:1-Math.pow(-2*p+2,2)/2;el.textContent=String(Math.round(ease*100)).padStart(3,"0");if(p<1)requestAnimationFrame(tick);}requestAnimationFrame(tick);}catch(e){}})();`;
+declare global {
+  interface Window {
+    __jgStart?: number;
+  }
+}
+
+const PRELOADER_INLINE_SCRIPT = `(function(){try{var start=performance.now();window.__jgStart=start;var dur=1450;function tick(now){var el=document.getElementById("jg-counter");var p=Math.min(1,Math.max(0,(now-start)/dur));var ease=p<0.5?2*p*p:1-Math.pow(-2*p+2,2)/2;if(el){el.textContent=String(Math.round(ease*100)).padStart(3,"0");}if(p<1)requestAnimationFrame(tick);}requestAnimationFrame(tick);}catch(e){}})();`;
 
 /**
  * Motor global de movimento otimizado para Mobile & Desktop:
- * 1. Abertura cinética acelerada via CSS GPU (@keyframes) que inicia em 0ms sem
- *    esperar hidratação do JS, e é pulada instantaneamente em reloads (0ms de trava).
+ * 1. Abertura cinética de 2.0 segundos acelerada via CSS GPU (@keyframes) +
+ *    contador 000 -> 100% sincronizado antes e depois da hidratação do React,
+ *    funcionando em toda abertura e reload sem travar o celular.
  * 2. Lenis Smooth Scroll ativado apenas em desktop (pointer: fine); no mobile usa
  *    o scroll nativo de 120Hz do iOS/Android sem sobrecarga de CPU/GPU.
  * 3. Cursor interativo exclusivo para desktop.
@@ -24,6 +31,7 @@ const PRELOADER_INLINE_SCRIPT = `(function(){try{var nav=performance.getEntriesB
 export function MotionProvider({ children }: { children: React.ReactNode }) {
   const cursorDotRef = useRef<HTMLDivElement>(null);
   const cursorRingRef = useRef<HTMLDivElement>(null);
+  const counterRef = useRef<HTMLSpanElement>(null);
   const [cursorLabel, setCursorLabel] = useState<string>("");
   const [cursorHovered, setCursorHovered] = useState(false);
 
@@ -32,6 +40,24 @@ export function MotionProvider({ children }: { children: React.ReactNode }) {
       "(prefers-reduced-motion: reduce)",
     ).matches;
     if (prefersReduced) return;
+
+    // Garante que após a hidratação do React o contador continue sincronizado até 100%
+    const start = window.__jgStart ?? performance.now();
+    const dur = 1450;
+    let rafId = 0;
+    const syncCounter = (now: number) => {
+      const p = Math.min(1, Math.max(0, (now - start) / dur));
+      const ease = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+      if (counterRef.current) {
+        counterRef.current.textContent = String(
+          Math.round(ease * 100),
+        ).padStart(3, "0");
+      }
+      if (p < 1) {
+        rafId = window.requestAnimationFrame(syncCounter);
+      }
+    };
+    rafId = window.requestAnimationFrame(syncCounter);
 
     const hasFinePointer = window.matchMedia("(pointer: fine)").matches;
     let lenis: Lenis | null = null;
@@ -76,7 +102,7 @@ export function MotionProvider({ children }: { children: React.ReactNode }) {
           } else {
             initialDest.scrollIntoView({ behavior: "smooth" });
           }
-        }, 400);
+        }, 2050);
       }
     }
 
@@ -156,6 +182,7 @@ export function MotionProvider({ children }: { children: React.ReactNode }) {
     }
 
     return () => {
+      window.cancelAnimationFrame(rafId);
       cleanupCursor();
       document.removeEventListener("click", onAnchorClick);
       if (updateTicker) gsap.ticker.remove(updateTicker);
@@ -165,7 +192,7 @@ export function MotionProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <MotionConfig reducedMotion="user">
-      {/* Abertura acelerada via CSS GPU — inicia em 0ms e é pulada instantaneamente no reload */}
+      {/* Abertura acelerada via CSS GPU — inicia em 0ms em toda abertura e reload */}
       <div
         id="jg-preloader"
         aria-hidden="true"
@@ -175,7 +202,7 @@ export function MotionProvider({ children }: { children: React.ReactNode }) {
           {[0, 1, 2, 3, 4].map((col) => (
             <div
               key={col}
-              style={{ animationDelay: `${1.18 + col * 0.035}s` }}
+              style={{ animationDelay: `${1.45 + col * 0.04}s` }}
               className="animate-preloader-col h-full border-r border-white/[0.04] bg-[#030304] last:border-r-0"
             />
           ))}
@@ -226,7 +253,13 @@ export function MotionProvider({ children }: { children: React.ReactNode }) {
                 Preparando experiência
               </span>
               <span className="text-accent-sheen font-display text-4xl font-bold leading-none tracking-tight sm:text-6xl">
-                <span id="jg-counter">000</span>
+                <span
+                  id="jg-counter"
+                  ref={counterRef}
+                  suppressHydrationWarning
+                >
+                  000
+                </span>
                 <span className="text-xl text-accent-2">%</span>
               </span>
             </div>
