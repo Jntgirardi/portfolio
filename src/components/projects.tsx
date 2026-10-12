@@ -6,6 +6,7 @@ import { ArrowUpRight } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { projects, socials } from "@/content/profile";
 import { ProjectCard } from "./project-card";
+import { ButtonLink } from "./ui/button-link";
 import { SectionHeading } from "./ui/section-heading";
 
 if (typeof window !== "undefined") {
@@ -26,16 +27,15 @@ export function Projects() {
       cards.forEach((card) => {
         gsap.fromTo(
           card,
-          { y: 56, scale: 0.97, opacity: 0 },
+          { y: 56, opacity: 0 },
           {
             y: 0,
-            scale: 1,
             opacity: 1,
-            duration: 0.85,
+            duration: 0.9,
             ease: "expo.out",
             scrollTrigger: {
               trigger: card,
-              start: "top 88%",
+              start: "top 86%",
               toggleActions: "play none none none",
             },
           },
@@ -51,44 +51,39 @@ export function Projects() {
       ref={sectionRef}
       id="projetos"
       aria-labelledby="projetos-titulo"
-      className="telemetry-grid relative border-y border-line bg-surface/35 py-28 md:py-40"
+      className="telemetry-grid relative border-y border-white/10 bg-surface/30 py-28 md:py-40"
     >
       <div className="container-page">
         <SectionHeading
           id="projetos-titulo"
           index="02"
           label="Projetos selecionados"
+          telemetryTag="SELECTED WORKS // FULL STACK & CLOUD"
           title={
             <>
-              Trabalhos em{" "}
+              Engenharia em{" "}
               <span className="font-serif italic font-normal text-accent">
-                destaque
+                produção
               </span>
             </>
           }
         />
 
-        <div className="space-y-10 md:space-y-14">
+        <div className="space-y-20 md:space-y-28">
           {projects.map((project, i) => (
             <ProjectCard key={project.slug} project={project} index={i} />
           ))}
         </div>
 
         {github && (
-          <div className="mt-14 flex justify-end">
-            <a
+          <div className="mt-16 flex justify-end border-t border-white/10 pt-10">
+            <ButtonLink
               href={github.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group inline-flex min-h-11 items-center gap-2.5 rounded-full border border-white/10 bg-surface px-6 font-sans text-[13px] font-semibold tracking-tight text-ink transition-colors duration-300 hover:border-accent/50 hover:text-accent"
+              variant="secondary"
+              icon={<ArrowUpRight className="size-4" />}
             >
-              <span>Ver mais repositórios no GitHub</span>
-              <span className="sr-only"> (abre em nova aba)</span>
-              <ArrowUpRight
-                aria-hidden="true"
-                className="size-4 text-accent transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-              />
-            </a>
+              Explorar todos os repositórios no GitHub
+            </ButtonLink>
           </div>
         )}
       </div>
