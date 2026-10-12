@@ -236,12 +236,12 @@ export function MotionProvider({ children }: { children: React.ReactNode }) {
           ref={hudRef}
           className="absolute inset-0 flex flex-col justify-between p-6 sm:p-12"
         >
-          <div className="flex items-center justify-between font-sans text-xs font-medium text-muted">
+          <div className="flex items-center justify-between font-sans text-xs font-semibold text-muted">
             <span className="flex items-center gap-2.5 text-ink">
-              <span className="size-2 rounded-full bg-accent" />
+              <span className="h-2 w-4 -skew-x-12 bg-gradient-to-r from-accent to-accent-2" />
               Portfólio · {profile.name}
             </span>
-            <span>{profile.location}</span>
+            <span className="text-accent-2">{profile.location}</span>
           </div>
 
           <div className="my-auto flex flex-col items-center text-center">
@@ -252,49 +252,49 @@ export function MotionProvider({ children }: { children: React.ReactNode }) {
             >
               <path
                 d="M 20 65 C 75 15, 285 15, 340 65 C 285 98, 75 98, 20 65 Z"
-                stroke="#1ae57e"
-                strokeWidth="1.75"
+                stroke="#ff3d1f"
+                strokeWidth="2"
                 strokeDasharray="10 6"
                 className="animate-dash"
               />
-              <circle cx="180" cy="58" r="22" stroke="rgba(255,255,255,0.2)" />
-              <circle cx="180" cy="58" r="4" fill="#1ae57e" />
+              <circle cx="180" cy="58" r="22" stroke="#00e5ff" strokeOpacity="0.5" />
+              <circle cx="180" cy="58" r="4.5" fill="#00e5ff" />
             </svg>
             <p className="font-display text-3xl font-bold tracking-tight text-ink sm:text-5xl">
               {profile.name}
             </p>
-            <p className="mt-2 font-sans text-xs font-medium text-accent sm:text-sm">
+            <p className="mt-2 font-sans text-xs font-semibold text-accent-2 sm:text-sm">
               {profile.role}
             </p>
           </div>
 
           <div>
             <div className="mb-3 flex items-end justify-between">
-              <span className="font-sans text-xs font-medium text-muted">
-                Iniciando experiência
+              <span className="font-sans text-xs font-semibold text-muted">
+                Preparando experiência
               </span>
-              <span className="font-display text-4xl font-bold leading-none tracking-tight text-accent sm:text-6xl">
+              <span className="text-accent-sheen font-display text-4xl font-bold leading-none tracking-tight sm:text-6xl">
                 <span ref={counterRef}>000</span>
-                <span className="text-xl text-muted">%</span>
+                <span className="text-xl text-accent-2">%</span>
               </span>
             </div>
-            <div className="h-[2px] w-full overflow-hidden rounded-full bg-white/10">
+            <div className="h-[3px] w-full overflow-hidden rounded-full bg-white/10">
               <div
                 ref={barRef}
-                className="h-full w-full origin-left scale-x-0 bg-accent"
+                className="h-full w-full origin-left scale-x-0 bg-gradient-to-r from-accent via-[#ff7a00] to-accent-2"
               />
             </div>
           </div>
         </div>
       </div>
 
-      {/* Cursor interativo clean */}
+      {/* Cursor interativo Dual-Clash */}
       <div
         ref={cursorDotRef}
         aria-hidden="true"
         className="pointer-events-none fixed left-0 top-0 z-[110] hidden -translate-x-1/2 -translate-y-1/2 md:block"
       >
-        <div className="size-1.5 rounded-full bg-accent" />
+        <div className="size-2 rotate-45 bg-accent" />
       </div>
       <div
         ref={cursorRingRef}
@@ -304,10 +304,10 @@ export function MotionProvider({ children }: { children: React.ReactNode }) {
         <div
           className={`flex items-center justify-center rounded-full border transition-all duration-300 ${
             cursorLabel
-              ? "h-9 px-3.5 border-accent bg-accent font-sans text-[11px] font-semibold tracking-tight text-accent-ink"
+              ? "h-9 border-accent-2 bg-accent px-3.5 font-sans text-[11px] font-bold tracking-tight text-white"
               : cursorHovered
-                ? "size-10 border-accent/70 bg-accent/5"
-                : "size-7 border-white/20"
+                ? "size-10 border-accent-2 bg-accent-2/10"
+                : "size-7 border-accent-2/40"
           }`}
         >
           {cursorLabel && <span>{cursorLabel}</span>}

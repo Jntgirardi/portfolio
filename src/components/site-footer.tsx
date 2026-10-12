@@ -13,13 +13,13 @@ export function SiteFooter() {
           <p className="font-display text-3xl font-bold tracking-tight">
             {profile.name}
           </p>
-          <p className="mt-2 font-sans text-sm font-medium text-accent">
+          <p className="mt-2 font-sans text-sm font-semibold text-accent-2">
             <Fill>{profile.role}</Fill>
           </p>
         </div>
 
         <nav aria-label="Rodapé" className="md:col-span-3">
-          <h2 className="mb-4 font-sans text-xs font-semibold uppercase tracking-wider text-accent">
+          <h2 className="mb-4 font-sans text-xs font-bold uppercase tracking-wider text-accent">
             Navegação
           </h2>
           <ul className="space-y-2.5 font-sans text-sm text-muted">
@@ -27,7 +27,7 @@ export function SiteFooter() {
               <li key={item.id}>
                 <a
                   href={`#${item.id}`}
-                  className="link-underline transition-colors hover:text-ink"
+                  className="link-underline transition-colors hover:text-accent-2"
                 >
                   {item.label}
                 </a>
@@ -37,7 +37,7 @@ export function SiteFooter() {
         </nav>
 
         <div className="md:col-span-4">
-          <h2 className="mb-4 font-sans text-xs font-semibold uppercase tracking-wider text-accent">
+          <h2 className="mb-4 font-sans text-xs font-bold uppercase tracking-wider text-accent-2">
             Redes e contato
           </h2>
           <ul className="space-y-3 font-sans text-sm text-muted">
@@ -54,7 +54,7 @@ export function SiteFooter() {
                   >
                     <SocialIcon
                       icon={s.icon}
-                      className="size-4 text-accent transition-transform duration-300 group-hover:scale-110"
+                      className="size-4 text-accent transition-all duration-300 group-hover:scale-110 group-hover:text-accent-2"
                     />
                     <span className="link-underline">{s.handle}</span>
                     {external && (
@@ -78,12 +78,12 @@ export function SiteFooter() {
         </p>
         <a
           href="#inicio"
-          className="group inline-flex min-h-11 items-center gap-2 font-medium text-ink transition-colors hover:text-accent"
+          className="group inline-flex min-h-11 items-center gap-2 font-medium text-ink transition-colors hover:text-accent-2"
         >
           Voltar ao topo
           <ArrowUp
             aria-hidden="true"
-            className="size-3.5 text-accent transition-transform duration-300 group-hover:-translate-y-0.5"
+            className="size-3.5 text-accent transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:text-accent-2"
           />
         </a>
       </div>

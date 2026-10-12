@@ -118,63 +118,51 @@ export function SiteHeader() {
         )}
       >
         <div className="container-page flex h-16 items-center justify-between md:h-20">
-          {/* Assinatura vetorial autoral (sem caixinha de iniciais genérica de IA) */}
+          {/* Monograma vetorial Dual-Clash (#00E5FF Ciano × #FF3D1F Flame) */}
           <a
             href="#inicio"
             className="group flex items-center gap-3.5"
             aria-label={`${profile.name} — voltar ao início`}
             onClick={() => open && close(false)}
           >
-            {/* Monograma geométrico vetorial customizado (estilo Lando Norris / F1) */}
             <svg
               viewBox="0 0 44 28"
               className="h-6 w-auto overflow-visible"
               fill="none"
               aria-hidden="true"
             >
-              {/* Asa esquerda dinâmica (J estilizado em ângulo de velocidade) */}
+              {/* Asa esquerda em Ciano Elétrico (#00E5FF) */}
               <path
                 d="M16 2 L22 2 L15 22 C13.8 25.2 11.2 26 7.5 26 L2 26 L4 20.5 L8.5 20.5 C10 20.5 10.8 19.8 11.4 18 L16 2 Z"
-                className="fill-ink transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-x-0.5"
+                fill="#00e5ff"
+                className="transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-x-0.5"
               />
-              {/* Lâmina geométrica direita em esmeralda (G aerodinâmico) */}
+              {/* Lâmina direita em Vermelho-Chama (#FF3D1F) */}
               <path
                 d="M26 2 L42 2 L40 7.5 L29.5 7.5 L26.2 17 C25.6 18.8 26.2 20.5 28.2 20.5 L34.5 20.5 L35.8 16.5 L30.5 16.5 L32 11.5 L42.5 11.5 L38.2 24 C37.4 25.4 36 26 33.8 26 L24.5 26 C20.5 26 19.2 23.2 20.6 19 L26 2 Z"
-                className="fill-accent transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0.5"
-              />
-              {/* Traço diagonal de telemetria entre as lâminas */}
-              <line
-                x1="23.5"
-                y1="0"
-                x2="16.5"
-                y2="28"
-                stroke="#1ae57e"
-                strokeWidth="1.25"
-                strokeOpacity="0.45"
-                className="transition-opacity duration-300 group-hover:opacity-100"
+                fill="#ff3d1f"
+                className="transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0.5"
               />
             </svg>
 
-            {/* Lockup cinético com rotação vertical no hover (só exibe o sobrenome quando rola ou passa o mouse, sem repetir o título gigante do Hero) */}
-            <div className="hidden h-4 overflow-hidden font-mono text-[11px] uppercase tracking-[0.22em] sm:block">
+            <div className="hidden h-4 overflow-hidden font-display text-xs font-bold uppercase tracking-wider sm:block">
               <div className="flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-4">
-                <span className="flex h-4 items-center gap-1.5 text-ink/90">
-                  <span className="font-bold">GIRARDI</span>
-                  <span className="text-accent">//</span>
-                  <span className="text-muted">DEV</span>
+                <span className="flex h-4 items-center gap-1.5 text-ink">
+                  <span>GIRARDI</span>
+                  <span className="text-accent">×</span>
+                  <span className="text-accent-2">FULL STACK</span>
                 </span>
-                <span className="flex h-4 items-center gap-1.5 font-semibold text-accent">
-                  <span>INÍCIO</span>
-                  <span>↺</span>
+                <span className="flex h-4 items-center gap-1.5 text-accent-2">
+                  <span>VOLTAR AO TOPO</span>
                 </span>
               </div>
             </div>
           </a>
 
-          {/* Navegação principal */}
+          {/* Navegação principal com destaque em duas cores */}
           <nav
             aria-label="Principal"
-            className="shape-blade hidden border border-white/[0.09] bg-[#0a0d11]/90 p-1 shadow-[0_10px_30px_rgba(0,0,0,0.45)] backdrop-blur-xl md:block"
+            className="shape-blade hidden border border-white/[0.09] bg-[#0b0c14]/90 p-1 shadow-[0_10px_30px_rgba(0,0,0,0.45)] backdrop-blur-xl md:block"
           >
             <ul className="flex items-center gap-0.5">
               {navItems.map((item) => {
@@ -185,14 +173,14 @@ export function SiteHeader() {
                       href={`#${item.id}`}
                       aria-current={isActive ? "location" : undefined}
                       className={cn(
-                        "relative flex items-center gap-2 px-4 py-1.5 font-sans text-[13px] font-medium tracking-tight transition-colors duration-300",
-                        isActive ? "text-ink" : "text-muted hover:text-ink",
+                        "relative flex items-center gap-2 px-4 py-1.5 font-sans text-[13px] font-semibold tracking-tight transition-colors duration-300",
+                        isActive ? "text-white" : "text-muted hover:text-ink",
                       )}
                     >
                       {isActive && (
                         <motion.span
                           layoutId="nav-active"
-                          className="shape-blade-sm absolute inset-0 z-0 border border-accent/40 bg-accent/10"
+                          className="shape-blade-sm absolute inset-0 z-0 border border-accent/60 bg-gradient-to-r from-accent/25 to-accent-2/20"
                           transition={{
                             type: "spring",
                             stiffness: 400,
@@ -203,7 +191,7 @@ export function SiteHeader() {
                       {isActive && (
                         <span
                           aria-hidden="true"
-                          className="relative z-10 size-1.5 rotate-45 bg-accent"
+                          className="relative z-10 size-1.5 rotate-45 bg-accent-2"
                         />
                       )}
                       <span className="relative z-10">{item.label}</span>
@@ -214,21 +202,24 @@ export function SiteHeader() {
             </ul>
           </nav>
 
-          {/* Acesso rápido ao GitHub e LinkedIn */}
+          {/* Links diretos para GitHub e LinkedIn */}
           <div className="flex items-center gap-4">
-            <div className="hidden items-center gap-4 md:flex">
-              {headerSocials.map((s) => (
+            <div className="hidden items-center gap-5 md:flex">
+              {headerSocials.map((s, idx) => (
                 <a
                   key={s.label}
                   href={s.href}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`${s.label} (abre em nova aba)`}
-                  className="group inline-flex items-center gap-1.5 font-sans text-xs font-medium text-muted transition-colors duration-300 hover:text-ink"
+                  className="group inline-flex items-center gap-1.5 font-sans text-xs font-semibold text-muted transition-colors duration-300 hover:text-ink"
                 >
                   <SocialIcon
                     icon={s.icon}
-                    className="size-3.5 text-accent transition-transform duration-300 group-hover:scale-110"
+                    className={cn(
+                      "size-3.5 transition-transform duration-300 group-hover:scale-110",
+                      idx === 0 ? "text-accent" : "text-accent-2",
+                    )}
                   />
                   <span className="link-underline">{s.label}</span>
                 </a>
@@ -238,7 +229,7 @@ export function SiteHeader() {
             <button
               ref={toggleRef}
               type="button"
-              className="shape-blade-sm grid size-10 place-items-center border border-white/15 bg-surface text-ink transition-colors hover:border-accent/60 hover:text-accent md:hidden"
+              className="shape-blade-sm grid size-10 place-items-center border border-white/15 bg-surface text-ink transition-colors hover:border-accent hover:text-accent md:hidden"
               aria-expanded={open}
               aria-controls="menu-mobile"
               aria-label={open ? "Fechar menu" : "Abrir menu"}
@@ -297,7 +288,7 @@ export function SiteHeader() {
                       <span>{item.label}</span>
                       <ArrowUpRight
                         aria-hidden="true"
-                        className="size-5 text-accent transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                        className="size-5 text-accent-2 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                       />
                     </a>
                   </motion.li>
@@ -305,16 +296,22 @@ export function SiteHeader() {
               </ul>
             </nav>
             <ul className="container-page flex flex-wrap gap-2.5 py-8">
-              {socials.map((s) => (
+              {socials.map((s, idx) => (
                 <li key={s.label}>
                   <a
                     href={s.href}
                     {...(s.href.startsWith("http")
                       ? { target: "_blank", rel: "noopener noreferrer" }
                       : {})}
-                    className="shape-blade-sm flex min-h-10 items-center gap-2 border border-line bg-surface px-4 font-sans text-xs font-medium text-ink transition-colors hover:border-accent/50 hover:text-accent"
+                    className="shape-blade-sm flex min-h-10 items-center gap-2 border border-line bg-surface px-4 font-sans text-xs font-semibold text-ink transition-colors hover:border-accent hover:text-accent"
                   >
-                    <SocialIcon icon={s.icon} className="size-3.5 text-accent" />
+                    <SocialIcon
+                      icon={s.icon}
+                      className={cn(
+                        "size-3.5",
+                        idx % 2 === 0 ? "text-accent" : "text-accent-2",
+                      )}
+                    />
                     {s.label}
                   </a>
                 </li>
