@@ -9,56 +9,30 @@ import localFont from "next/font/local";
  */
 
 export const fontDisplay = localFont({
-  src: [
-    {
-      path: "../../node_modules/@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2",
-      weight: "300 700",
-      style: "normal",
-    },
-    {
-      path: "../../node_modules/@fontsource-variable/space-grotesk/files/space-grotesk-latin-ext-wght-normal.woff2",
-      weight: "300 700",
-      style: "normal",
-    },
-  ],
+  src: "../../node_modules/@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2",
+  weight: "300 700",
+  style: "normal",
   variable: "--font-display-var",
   display: "swap",
   fallback: ["system-ui", "sans-serif"],
 });
 
 export const fontSans = localFont({
-  src: [
-    {
-      path: "../../node_modules/@fontsource-variable/plus-jakarta-sans/files/plus-jakarta-sans-latin-wght-normal.woff2",
-      weight: "200 800",
-      style: "normal",
-    },
-    {
-      path: "../../node_modules/@fontsource-variable/plus-jakarta-sans/files/plus-jakarta-sans-latin-ext-wght-normal.woff2",
-      weight: "200 800",
-      style: "normal",
-    },
-  ],
+  src: "../../node_modules/@fontsource-variable/plus-jakarta-sans/files/plus-jakarta-sans-latin-wght-normal.woff2",
+  weight: "200 800",
+  style: "normal",
   variable: "--font-sans-var",
   display: "swap",
   fallback: ["system-ui", "-apple-system", "Segoe UI", "Roboto", "sans-serif"],
 });
 
 export const fontSerif = localFont({
-  src: [
-    {
-      path: "../../node_modules/@fontsource-variable/fraunces/files/fraunces-latin-opsz-italic.woff2",
-      weight: "100 900",
-      style: "italic",
-    },
-    {
-      path: "../../node_modules/@fontsource-variable/fraunces/files/fraunces-latin-opsz-normal.woff2",
-      weight: "100 900",
-      style: "normal",
-    },
-  ],
+  src: "../../node_modules/@fontsource-variable/fraunces/files/fraunces-latin-wght-italic.woff2",
+  weight: "100 900",
+  style: "italic",
   variable: "--font-serif-var",
   display: "swap",
+  preload: false,
   fallback: ["Georgia", "serif"],
 });
 

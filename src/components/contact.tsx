@@ -18,11 +18,19 @@ export function Contact() {
     >
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -right-24 bottom-10 size-[28rem] rounded-full bg-accent-2/[0.08] blur-[140px]"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(0,229,255,0.14) 0%, rgba(0,229,255,0) 70%)",
+        }}
+        className="pointer-events-none absolute -right-24 bottom-10 size-[30rem] rounded-full"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -left-24 top-10 size-[28rem] rounded-full bg-accent/[0.08] blur-[140px]"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(255,61,31,0.14) 0%, rgba(255,61,31,0) 70%)",
+        }}
+        className="pointer-events-none absolute -left-24 top-10 size-[30rem] rounded-full"
       />
 
       <div className="container-page relative z-10">

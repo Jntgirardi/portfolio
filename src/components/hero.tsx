@@ -155,11 +155,19 @@ export function Hero() {
       >
         <div
           ref={orbFlameRef}
-          className="absolute -left-24 top-1/4 size-[30rem] rounded-full bg-accent/[0.11] blur-[150px]"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(255,61,31,0.18) 0%, rgba(255,61,31,0) 70%)",
+          }}
+          className="absolute -left-24 top-1/4 size-[32rem] rounded-full"
         />
         <div
           ref={orbCyanRef}
-          className="absolute -right-24 bottom-1/4 size-[30rem] rounded-full bg-accent-2/[0.11] blur-[150px]"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(0,229,255,0.18) 0%, rgba(0,229,255,0) 70%)",
+          }}
+          className="absolute -right-24 bottom-1/4 size-[32rem] rounded-full"
         />
 
         <div
