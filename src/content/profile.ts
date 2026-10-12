@@ -286,7 +286,7 @@ export const education: TimelineEntry[] = [
     period: "Cursando (5º semestre) · Conclusão: Jun/2028",
     location: "Feira de Santana, BA · Turno Noturno",
     description:
-      "Graduação com ênfase em arquitetura de software, desenvolvimento backend, bancos de dados, qualidade de software e engenharia de sistemas distribuídos.",
+      "Graduação com ênfase em arquitetura de software, desenvolvimento Full Stack, bancos de dados, qualidade de software e engenharia de sistemas distribuídos.",
     highlights: [
       "5º semestre em andamento (turno noturno) com previsão de conclusão em junho de 2028.",
       "Desenvolvimento prático de sistemas SaaS multi-tenant, plataformas em tempo real e automações em nuvem.",
@@ -298,7 +298,7 @@ export const education: TimelineEntry[] = [
 
 export const contact = {
   heading: "Vamos conversar?",
-  body: "Procurando alguém para fortalecer o time em Engenharia de Software, Backend ou Automação? Fale comigo por e-mail, LinkedIn ou telefone.",
+  body: "Procurando alguém para fortalecer o time em Engenharia de Software, Desenvolvimento Full Stack ou Automação? Fale comigo por e-mail, LinkedIn ou telefone.",
 };
 
 /* ───────────────────────────── Navegação ─────────────────────────────── */
