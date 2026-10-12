@@ -1,5 +1,8 @@
 # Portfólio — Jonathas Girardi
 
+🌐 **Portfólio Online (Vercel):** [https://jonathasgirardi.vercel.app](https://jonathasgirardi.vercel.app)  
+💼 **LinkedIn:** [linkedin.com/in/jonathasgirardi-jr](https://www.linkedin.com/in/jonathasgirardi-jr)
+
 Portfólio profissional de **Jonathas Girardi** (Engenharia de Software · Desenvolvedor Full Stack), construído com **Next.js 16 (App Router)**, **TypeScript**, **Tailwind CSS v4**, **GSAP (`ScrollTrigger`)**, **Lenis**, **Motion for React** e **Lucide React**.
 
 ---
@@ -8,9 +11,9 @@ Portfólio profissional de **Jonathas Girardi** (Engenharia de Software · Desen
 
 - **Next.js 16 (App Router)** — pré-renderização estática (`SSG`), geração dinâmica de Open Graph (`opengraph-image.tsx`), `sitemap.xml` e `robots.txt`.
 - **TypeScript** — tipagem estrita de todo o conteúdo e componentes.
-- **Tailwind CSS v4** — tokens de design em variáveis CSS (`#050506` Obsidian Dark + `#1AE57E` Emerald) e superfícies translúcidas.
+- **Tailwind CSS v4** — tokens de design em choque térmico (`#06060A` Midnight Obsidian + `#FF3D1F` Electric Flame × `#00E5FF` Cyber Cyan).
 - **Tipografia Auto-Hospedada (`next/font/local`)** — `Space Grotesk Variable`, `Plus Jakarta Sans Variable`, `Fraunces Variable` e `JetBrains Mono Variable` via `@fontsource-variable/*` (zero requisições externas em tempo de build).
-- **Animações Cinéticas (`GSAP` + `Lenis` + `Motion`)** — abertura interativa de 2 segundos, rolagem inercial suave, curvas SVG 3D reativas ao ponteiro, faixas cinéticas sincronizadas à velocidade do scroll (`VelocityMarquee`), cartões 3D com spotlight e filtro animado de competências, respeitando `prefers-reduced-motion`.
+- **Animações Cinéticas (`GSAP` + `Lenis` + `Motion`)** — abertura acelerada via CSS GPU, rolagem inercial suave, curvas SVG 3D reativas ao ponteiro, faixas cinéticas sincronizadas à velocidade do scroll (`VelocityMarquee`), palco 3D e filtro animado de competências, respeitando `prefers-reduced-motion`.
 
 ---
 
