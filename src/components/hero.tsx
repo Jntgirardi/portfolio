@@ -3,7 +3,7 @@
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowDown, ArrowUpRight, Sparkles } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { profile } from "@/content/profile";
 import { ButtonLink } from "./ui/button-link";
 import { Fill } from "./ui/fill";
@@ -23,6 +23,7 @@ export function Hero() {
   const line1Ref = useRef<HTMLSpanElement>(null);
   const line2Ref = useRef<HTMLSpanElement>(null);
   const coreRef = useRef<HTMLDivElement>(null);
+  const [coords, setCoords] = useState({ x: "0512", y: "0384" });
 
   const [first, last] = splitName(profile.name);
 
@@ -40,7 +41,7 @@ export function Hero() {
 
       gsap.fromTo(
         chars,
-        { yPercent: 110, rotateZ: 3, opacity: 0 },
+        { yPercent: 112, rotateZ: 4, opacity: 0 },
         {
           yPercent: 0,
           rotateZ: 0,
@@ -54,7 +55,7 @@ export function Hero() {
 
       gsap.fromTo(
         fades,
-        { y: 20, opacity: 0 },
+        { y: 22, opacity: 0 },
         {
           y: 0,
           opacity: 1,
@@ -67,7 +68,7 @@ export function Hero() {
 
       if (line1Ref.current && line2Ref.current) {
         gsap.to(line1Ref.current, {
-          xPercent: -8,
+          xPercent: -9,
           ease: "none",
           scrollTrigger: {
             trigger: section,
@@ -77,7 +78,7 @@ export function Hero() {
           },
         });
         gsap.to(line2Ref.current, {
-          xPercent: 8,
+          xPercent: 9,
           ease: "none",
           scrollTrigger: {
             trigger: section,
@@ -93,12 +94,16 @@ export function Hero() {
       const rect = section.getBoundingClientRect();
       const nx = (e.clientX - rect.left) / rect.width - 0.5;
       const ny = (e.clientY - rect.top) / rect.height - 0.5;
+      setCoords({
+        x: String(Math.round(e.clientX)).padStart(4, "0"),
+        y: String(Math.round(e.clientY)).padStart(4, "0"),
+      });
       if (coreRef.current) {
         gsap.to(coreRef.current, {
-          rotateY: nx * 24,
-          rotateX: -ny * 24,
-          x: nx * 30,
-          y: ny * 22,
+          rotateY: nx * 26,
+          rotateX: -ny * 26,
+          x: nx * 32,
+          y: ny * 24,
           duration: 0.8,
           ease: "power3.out",
         });
@@ -119,7 +124,7 @@ export function Hero() {
       aria-labelledby="hero-title"
       className="telemetry-grid relative flex min-h-dvh flex-col justify-between overflow-hidden pt-24 pb-10 md:pt-28 md:pb-12"
     >
-      {/* Formas vetoriais orgânicas 3D reativas ao mouse */}
+      {/* Formas vetoriais 3D reativas ao ponteiro */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden"
@@ -132,7 +137,7 @@ export function Hero() {
         >
           <svg
             viewBox="0 0 600 600"
-            className="size-full opacity-45"
+            className="size-full opacity-50"
             fill="none"
           >
             <circle
@@ -148,7 +153,7 @@ export function Hero() {
               cy="300"
               r="235"
               stroke="#1ae57e"
-              strokeOpacity="0.3"
+              strokeOpacity="0.32"
               strokeWidth="1.25"
               strokeDasharray="90 30 15 30"
               className="animate-dash"
@@ -171,18 +176,34 @@ export function Hero() {
               d="M135 290 C 190 205, 410 205, 465 290 C 410 335, 190 335, 135 290 Z"
               stroke="#6ef9b0"
               strokeWidth="1.15"
-              strokeOpacity="0.35"
+              strokeOpacity="0.38"
               strokeDasharray="12 8"
               className="animate-dash"
+            />
+            <line
+              x1="300"
+              y1="10"
+              x2="300"
+              y2="590"
+              stroke="rgba(26,229,126,0.09)"
+              strokeWidth="1"
+            />
+            <line
+              x1="10"
+              y1="300"
+              x2="590"
+              y2="300"
+              stroke="rgba(26,229,126,0.09)"
+              strokeWidth="1"
             />
           </svg>
         </div>
       </div>
 
-      {/* Topo clean e contemporâneo do Hero */}
-      <div className="container-page relative z-10 flex flex-wrap items-center justify-between gap-4">
+      {/* Barra superior com telemetria interativa do mouse + posicionamento Full Stack */}
+      <div className="container-page relative z-10 flex flex-wrap items-center justify-between gap-4 border-b border-white/[0.06] pb-4">
         <div data-hero-fade className="flex flex-wrap items-center gap-3">
-          <span className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-3.5 py-1.5 font-sans text-xs font-semibold tracking-tight text-accent">
+          <span className="shape-blade-sm inline-flex items-center gap-2 border border-accent/40 bg-accent/10 px-3.5 py-1.5 font-sans text-xs font-semibold tracking-tight text-accent">
             <Sparkles className="size-3.5" aria-hidden="true" />
             <span>{profile.role}</span>
           </span>
@@ -190,15 +211,21 @@ export function Hero() {
 
         <div
           data-hero-fade
-          className="hidden items-center gap-3 font-sans text-xs font-medium text-muted sm:flex"
+          aria-hidden="true"
+          className="hidden items-center gap-5 font-mono text-[11px] text-muted sm:flex"
         >
-          <span>UNIFAN · 5º Semestre</span>
-          <span className="text-white/15">•</span>
-          <span>{profile.location}</span>
+          <span>
+            POS <strong className="text-accent">{coords.x}</strong> :{" "}
+            <strong className="text-accent">{coords.y}</strong>
+          </span>
+          <span className="text-white/15">|</span>
+          <span className="font-sans text-xs font-medium">
+            UNIFAN · {profile.location}
+          </span>
         </div>
       </div>
 
-      {/* Título Principal com Space Grotesk moderna e equilibrada */}
+      {/* Título Cinético Monumental */}
       <div className="container-page relative z-10 my-auto py-8 md:py-12">
         <h1
           id="hero-title"
@@ -216,7 +243,7 @@ export function Hero() {
                 <span
                   key={idx}
                   data-hero-char
-                  className="inline-block will-change-transform"
+                  className="inline-block transition-transform duration-300 hover:-translate-y-1.5 will-change-transform"
                 >
                   {ch}
                 </span>
@@ -226,14 +253,14 @@ export function Hero() {
           <span
             ref={line2Ref}
             aria-hidden="true"
-            className="block overflow-hidden pb-[0.06em] text-accent sm:pl-[5vw] will-change-transform"
+            className="block overflow-hidden pb-[0.06em] text-accent sm:pl-[6vw] will-change-transform"
           >
             <span className="inline-flex flex-wrap">
               {last.split("").map((ch, idx) => (
                 <span
                   key={idx}
                   data-hero-char
-                  className="text-accent-sheen inline-block will-change-transform"
+                  className="text-accent-sheen inline-block transition-transform duration-300 hover:-translate-y-1.5 will-change-transform"
                 >
                   {ch === " " ? "\u00A0" : ch}
                 </span>
@@ -252,7 +279,7 @@ export function Hero() {
 
           <div
             data-hero-fade
-            className="flex flex-wrap gap-3 md:col-span-5 md:justify-end"
+            className="flex flex-wrap gap-3.5 md:col-span-5 md:justify-end"
           >
             <ButtonLink href="#projetos" icon={<ArrowDown className="size-4" />}>
               Ver projetos
@@ -268,12 +295,12 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Rodapé clean do Hero */}
+      {/* Rodapé de telemetria do Hero */}
       <div className="container-page relative z-10 flex flex-wrap items-center justify-between gap-4 border-t border-white/[0.06] pt-5 font-sans text-xs font-medium text-muted">
         <div data-hero-fade className="flex items-center gap-2.5">
           <span className="relative flex size-2" aria-hidden="true">
             <span className="absolute inline-flex size-full animate-ping rounded-full bg-accent opacity-75" />
-            <span className="relative inline-flex size-2 rounded-full bg-accent" />
+            <span className="relative inline-flex size-2 rotate-45 bg-accent" />
           </span>
           <Fill className="text-ink/90">{profile.availability}</Fill>
         </div>
@@ -283,7 +310,7 @@ export function Hero() {
           href="#sobre"
           className="group hidden items-center gap-2 text-muted transition-colors hover:text-ink sm:flex"
         >
-          <span>Explorar portfólio</span>
+          <span>Role para explorar</span>
           <ArrowDown
             aria-hidden="true"
             className="size-3.5 text-accent transition-transform duration-500 group-hover:translate-y-1"

@@ -47,9 +47,13 @@ export function SiteHeader() {
   const headerRef = useRef<HTMLElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
 
+  const headerSocials = socials.filter(
+    (s) => s.icon === "github" || s.icon === "linkedin",
+  );
+
   useEffect(() => {
     const onScroll = () => {
-      setScrolled(window.scrollY > 20);
+      setScrolled(window.scrollY > 40);
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -107,35 +111,70 @@ export function SiteHeader() {
         className={cn(
           "transition-all duration-500",
           open
-            ? "border-b border-white/[0.07] bg-bg"
+            ? "border-b border-white/[0.08] bg-bg"
             : scrolled
-              ? "border-b border-white/[0.06] bg-bg/80 backdrop-blur-xl"
+              ? "border-b border-white/[0.06] bg-bg/85 backdrop-blur-xl"
               : "border-b border-transparent bg-transparent",
         )}
       >
         <div className="container-page flex h-16 items-center justify-between md:h-20">
-          {/* Marca pessoal clean e moderna */}
+          {/* Assinatura vetorial autoral (sem caixinha de iniciais genérica de IA) */}
           <a
             href="#inicio"
-            className="group flex items-center gap-3"
+            className="group flex items-center gap-3.5"
             aria-label={`${profile.name} — voltar ao início`}
             onClick={() => open && close(false)}
           >
-            <span
+            {/* Monograma geométrico vetorial customizado (estilo Lando Norris / F1) */}
+            <svg
+              viewBox="0 0 44 28"
+              className="h-6 w-auto overflow-visible"
+              fill="none"
               aria-hidden="true"
-              className="grid size-9 place-items-center rounded-full border border-white/10 bg-white/[0.04] font-display text-xs font-bold tracking-tight text-accent transition-all duration-300 group-hover:border-accent/50 group-hover:bg-accent group-hover:text-accent-ink"
             >
-              {profile.initials}
-            </span>
-            <span className="hidden font-sans text-sm font-semibold tracking-tight text-ink sm:inline">
-              {profile.shortName}
-            </span>
+              {/* Asa esquerda dinâmica (J estilizado em ângulo de velocidade) */}
+              <path
+                d="M16 2 L22 2 L15 22 C13.8 25.2 11.2 26 7.5 26 L2 26 L4 20.5 L8.5 20.5 C10 20.5 10.8 19.8 11.4 18 L16 2 Z"
+                className="fill-ink transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-x-0.5"
+              />
+              {/* Lâmina geométrica direita em esmeralda (G aerodinâmico) */}
+              <path
+                d="M26 2 L42 2 L40 7.5 L29.5 7.5 L26.2 17 C25.6 18.8 26.2 20.5 28.2 20.5 L34.5 20.5 L35.8 16.5 L30.5 16.5 L32 11.5 L42.5 11.5 L38.2 24 C37.4 25.4 36 26 33.8 26 L24.5 26 C20.5 26 19.2 23.2 20.6 19 L26 2 Z"
+                className="fill-accent transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0.5"
+              />
+              {/* Traço diagonal de telemetria entre as lâminas */}
+              <line
+                x1="23.5"
+                y1="0"
+                x2="16.5"
+                y2="28"
+                stroke="#1ae57e"
+                strokeWidth="1.25"
+                strokeOpacity="0.45"
+                className="transition-opacity duration-300 group-hover:opacity-100"
+              />
+            </svg>
+
+            {/* Lockup cinético com rotação vertical no hover (só exibe o sobrenome quando rola ou passa o mouse, sem repetir o título gigante do Hero) */}
+            <div className="hidden h-4 overflow-hidden font-mono text-[11px] uppercase tracking-[0.22em] sm:block">
+              <div className="flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-4">
+                <span className="flex h-4 items-center gap-1.5 text-ink/90">
+                  <span className="font-bold">GIRARDI</span>
+                  <span className="text-accent">//</span>
+                  <span className="text-muted">DEV</span>
+                </span>
+                <span className="flex h-4 items-center gap-1.5 font-semibold text-accent">
+                  <span>INÍCIO</span>
+                  <span>↺</span>
+                </span>
+              </div>
+            </div>
           </a>
 
-          {/* Navegação em cápsula de vidro contemporânea */}
+          {/* Navegação principal */}
           <nav
             aria-label="Principal"
-            className="hidden rounded-full border border-white/[0.08] bg-[#0b0d10]/85 p-1 shadow-[0_8px_30px_rgba(0,0,0,0.35)] backdrop-blur-xl md:block"
+            className="shape-blade hidden border border-white/[0.09] bg-[#0a0d11]/90 p-1 shadow-[0_10px_30px_rgba(0,0,0,0.45)] backdrop-blur-xl md:block"
           >
             <ul className="flex items-center gap-0.5">
               {navItems.map((item) => {
@@ -146,16 +185,14 @@ export function SiteHeader() {
                       href={`#${item.id}`}
                       aria-current={isActive ? "location" : undefined}
                       className={cn(
-                        "relative flex items-center gap-2 rounded-full px-4 py-1.5 font-sans text-[13px] font-medium tracking-tight transition-colors duration-300",
-                        isActive
-                          ? "text-ink"
-                          : "text-muted hover:text-ink",
+                        "relative flex items-center gap-2 px-4 py-1.5 font-sans text-[13px] font-medium tracking-tight transition-colors duration-300",
+                        isActive ? "text-ink" : "text-muted hover:text-ink",
                       )}
                     >
                       {isActive && (
                         <motion.span
                           layoutId="nav-active"
-                          className="absolute inset-0 z-0 rounded-full border border-white/[0.09] bg-white/[0.07]"
+                          className="shape-blade-sm absolute inset-0 z-0 border border-accent/40 bg-accent/10"
                           transition={{
                             type: "spring",
                             stiffness: 400,
@@ -166,7 +203,7 @@ export function SiteHeader() {
                       {isActive && (
                         <span
                           aria-hidden="true"
-                          className="relative z-10 size-1.5 rounded-full bg-accent"
+                          className="relative z-10 size-1.5 rotate-45 bg-accent"
                         />
                       )}
                       <span className="relative z-10">{item.label}</span>
@@ -177,21 +214,31 @@ export function SiteHeader() {
             </ul>
           </nav>
 
-          {/* Ação rápida clean à direita */}
-          <div className="flex items-center gap-3">
-            <a
-              href="#contato"
-              className="hidden items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 font-sans text-xs font-medium text-ink transition-all duration-300 hover:border-accent/50 hover:bg-accent hover:text-accent-ink md:inline-flex"
-            >
-              <span className="size-1.5 rounded-full bg-accent transition-colors" />
-              <span>Falar comigo</span>
-              <ArrowUpRight className="size-3.5" aria-hidden="true" />
-            </a>
+          {/* Acesso rápido ao GitHub e LinkedIn */}
+          <div className="flex items-center gap-4">
+            <div className="hidden items-center gap-4 md:flex">
+              {headerSocials.map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${s.label} (abre em nova aba)`}
+                  className="group inline-flex items-center gap-1.5 font-sans text-xs font-medium text-muted transition-colors duration-300 hover:text-ink"
+                >
+                  <SocialIcon
+                    icon={s.icon}
+                    className="size-3.5 text-accent transition-transform duration-300 group-hover:scale-110"
+                  />
+                  <span className="link-underline">{s.label}</span>
+                </a>
+              ))}
+            </div>
 
             <button
               ref={toggleRef}
               type="button"
-              className="grid size-10 place-items-center rounded-full border border-white/10 bg-surface text-ink transition-colors hover:border-accent/50 hover:text-accent md:hidden"
+              className="shape-blade-sm grid size-10 place-items-center border border-white/15 bg-surface text-ink transition-colors hover:border-accent/60 hover:text-accent md:hidden"
               aria-expanded={open}
               aria-controls="menu-mobile"
               aria-label={open ? "Fechar menu" : "Abrir menu"}
@@ -221,7 +268,7 @@ export function SiteHeader() {
         {open && (
           <motion.div
             id="menu-mobile"
-            className="flex h-[calc(100dvh-4rem)] flex-col justify-between overflow-y-auto bg-bg md:hidden"
+            className="telemetry-grid flex h-[calc(100dvh-4rem)] flex-col justify-between overflow-y-auto bg-bg md:hidden"
             initial={{ opacity: 0, clipPath: "inset(0 0 100% 0)" }}
             animate={{ opacity: 1, clipPath: "inset(0 0 0% 0)" }}
             exit={{ opacity: 0, clipPath: "inset(0 0 100% 0)" }}
@@ -250,7 +297,7 @@ export function SiteHeader() {
                       <span>{item.label}</span>
                       <ArrowUpRight
                         aria-hidden="true"
-                        className="size-5 text-muted transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent"
+                        className="size-5 text-accent transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                       />
                     </a>
                   </motion.li>
@@ -265,7 +312,7 @@ export function SiteHeader() {
                     {...(s.href.startsWith("http")
                       ? { target: "_blank", rel: "noopener noreferrer" }
                       : {})}
-                    className="flex min-h-10 items-center gap-2 rounded-full border border-line bg-surface px-4 font-sans text-xs font-medium text-ink transition-colors hover:border-accent/50 hover:text-accent"
+                    className="shape-blade-sm flex min-h-10 items-center gap-2 border border-line bg-surface px-4 font-sans text-xs font-medium text-ink transition-colors hover:border-accent/50 hover:text-accent"
                   >
                     <SocialIcon icon={s.icon} className="size-3.5 text-accent" />
                     {s.label}
