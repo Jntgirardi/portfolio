@@ -138,6 +138,22 @@ export function MotionProvider({ children }: { children: React.ReactNode }) {
     gsap.ticker.add(updateTicker);
     gsap.ticker.lagSmoothing(0);
 
+    if (window.location.hash) {
+      const initialDest = document.querySelector<HTMLElement>(
+        window.location.hash,
+      );
+      history.replaceState(
+        null,
+        "",
+        window.location.pathname + window.location.search,
+      );
+      if (initialDest) {
+        window.setTimeout(() => {
+          lenis.scrollTo(initialDest, { offset: -64, immediate: false });
+        }, 2050);
+      }
+    }
+
     const onAnchorClick = (ev: MouseEvent) => {
       const target = (ev.target as HTMLElement | null)?.closest?.(
         'a[href^="#"]',
@@ -149,7 +165,13 @@ export function MotionProvider({ children }: { children: React.ReactNode }) {
       if (dest) {
         ev.preventDefault();
         lenis.scrollTo(dest, { offset: -64 });
-        history.pushState(null, "", hash);
+        if (window.location.hash) {
+          history.replaceState(
+            null,
+            "",
+            window.location.pathname + window.location.search,
+          );
+        }
       }
     };
     document.addEventListener("click", onAnchorClick);
