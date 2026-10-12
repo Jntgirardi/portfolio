@@ -1,23 +1,22 @@
 @import "tailwindcss";
 
-/* ───────────────────── Tokens de design (Obsidian Dark + Emerald Telemetry) ─────────────────────
-   Sistema autoral escuro (#050506), tipografia geométrica (Space Grotesk + Plus Jakarta Sans)
-   e verde esmeralda de telemetria (#1AE57E) — sem botões pílula genéricos e sem excesso de cards.
-   ────────────────────────────────────────────────────────────────────────────────────────────── */
+/* ───────────────────── Tokens de design (Dual-Clash: Electric Flame × Cyber Cyan) ─────────────────────
+   Contraste térmico de alto impacto: Vermelho-Chama (#FF3D1F) × Ciano Elétrico (#00E5FF)
+   sobre base profunda (#06060A) — vibrante, autoral e longe de interfaces de monitoramento padrão.
+   ─────────────────────────────────────────────────────────────────────────────────────────────────── */
 :root {
-  --bg: #050506;
-  --surface: #0a0d10;
-  --surface-elevated: #10151b;
-  --ink: #f4f6f8;
-  --muted: #8a93a0;
-  --line: #181e25;
-  --accent: #1ae57e;
-  --accent-bright: #6ef9b0;
-  --accent-deep: #0e9f54;
-  --accent-ink: #030805;
-  --accent-soft: rgba(26, 229, 126, 0.08);
-  --papaya: #0ea5e9;
-  --selection: #1ae57e;
+  --bg: #06060a;
+  --surface: #0c0d14;
+  --surface-elevated: #131520;
+  --ink: #f7f8fa;
+  --muted: #949ba8;
+  --line: #1d2030;
+  --accent: #ff3d1f;
+  --accent-2: #00e5ff;
+  --accent-ink: #06060a;
+  --accent-soft: rgba(255, 61, 31, 0.12);
+  --papaya: #00e5ff;
+  --selection: #ff3d1f;
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   color-scheme: dark;
 }
@@ -30,6 +29,7 @@
   --color-muted: var(--muted);
   --color-line: var(--line);
   --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
   --color-accent-ink: var(--accent-ink);
   --color-accent-soft: var(--accent-soft);
   --color-papaya: var(--papaya);
@@ -63,12 +63,12 @@
   }
 
   ::selection {
-    background: var(--selection);
-    color: #030805;
+    background: var(--accent);
+    color: #ffffff;
   }
 
   :focus-visible {
-    outline: 2px solid var(--accent);
+    outline: 2px solid var(--accent-2);
     outline-offset: 3px;
     border-radius: 12px 3px 12px 3px;
   }
@@ -105,71 +105,74 @@
   }
 
   .eyebrow {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    font-weight: 500;
-    letter-spacing: 0.14em;
+    font-family: var(--font-sans);
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--muted);
+    color: var(--accent-2);
   }
 
   .placeholder {
     background-image: repeating-linear-gradient(
       -45deg,
-      rgba(26, 229, 126, 0.09) 0 6px,
+      rgba(255, 61, 31, 0.12) 0 6px,
       transparent 6px 12px
     );
-    outline: 1px dashed rgba(26, 229, 126, 0.45);
+    outline: 1px dashed rgba(0, 229, 255, 0.5);
     outline-offset: 2px;
     border-radius: 4px;
     -webkit-box-decoration-break: clone;
     box-decoration-break: clone;
   }
 
+  /* Gradiente vibrante em choque térmico (Flame -> Ciano) */
   .text-accent-sheen {
     background-image: linear-gradient(
-      180deg,
-      #72fab2 0%,
-      #1ae57e 55%,
-      #0fa95a 100%
+      115deg,
+      #ff3d1f 0%,
+      #ff6a3d 42%,
+      #00e5ff 100%
     );
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
 
-  /* Tipografia vazada (outline) que preenche no hover */
+  /* Tipografia vazada (outline) que alterna entre as duas cores no hover */
   .stroke-display {
-    -webkit-text-stroke: 1.5px rgba(244, 246, 248, 0.22);
+    -webkit-text-stroke: 1.5px rgba(0, 229, 255, 0.35);
     color: transparent;
     transition:
       color 0.45s var(--ease-out-expo),
-      -webkit-text-stroke-color 0.45s var(--ease-out-expo);
+      -webkit-text-stroke-color 0.45s var(--ease-out-expo),
+      text-shadow 0.45s var(--ease-out-expo);
   }
   .group:hover .stroke-display,
   .stroke-display:hover {
     color: var(--accent);
     -webkit-text-stroke-color: var(--accent);
+    text-shadow: 0 0 32px rgba(255, 61, 31, 0.35);
   }
 
   .link-underline {
-    background-image: linear-gradient(var(--accent), var(--accent));
-    background-size: 0% 1.5px;
+    background-image: linear-gradient(90deg, var(--accent), var(--accent-2));
+    background-size: 0% 2px;
     background-position: 0 100%;
     background-repeat: no-repeat;
     transition: background-size 0.45s var(--ease-out-expo);
   }
   .link-underline:hover,
   .link-underline:focus-visible {
-    background-size: 100% 1.5px;
+    background-size: 100% 2px;
   }
 
-  /* Malha técnica sutil */
+  /* Fundo vivo com atmosfera duotone sutil */
   .telemetry-grid {
-    background-size: 76px 76px;
+    background-size: 84px 84px;
     background-image:
-      linear-gradient(to right, rgba(255, 255, 255, 0.016) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.016) 1px, transparent 1px);
+      linear-gradient(to right, rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
   }
 
   .grain::before {
@@ -178,12 +181,11 @@
     inset: 0;
     pointer-events: none;
     z-index: 60;
-    opacity: 0.024;
+    opacity: 0.022;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
-  /* Geometria assimétrica autoral (nem pílula redonda de IA, nem quadrado comum):
-     Canto superior-esquerdo e inferior-direito curvos (16px) + cantos opostos técnicos (3px) */
+  /* Geometria assimétrica autoral Kinetic Blade */
   .shape-blade {
     border-radius: 16px 3px 16px 3px;
   }

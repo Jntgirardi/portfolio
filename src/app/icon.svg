@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
-  <rect width="64" height="64" rx="14" fill="#050506" />
+  <rect width="64" height="64" rx="14" fill="#06060a" />
   <path
     d="M23 18 L30.5 18 L22 43 C20.5 47 17.2 48 12.5 48 L6 48 L8.5 41 L14 41 C15.8 41 16.8 40.1 17.5 38 L23 18 Z"
-    fill="#f4f6f8"
+    fill="#00e5ff"
   />
   <path
     d="M35.5 18 L55.5 18 L53 25 L40 25 L36 36.8 C35.2 39 36 41 38.5 41 L46.2 41 L47.8 36 L41.2 36 L43 30 L56 30 L50.8 45.5 C49.8 47.2 48 48 45.2 48 L33.8 48 C28.8 48 27.2 44.5 29 39.2 L35.5 18 Z"
-    fill="#1ae57e"
+    fill="#ff3d1f"
   />
 </svg>

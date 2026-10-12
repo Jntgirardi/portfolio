@@ -37,7 +37,7 @@ export default function OpengraphImage() {
               width: 64,
               height: 64,
               borderRadius: 64,
-              background: "#1ae57e",
+              background: "#ff3d1f",
               color: "#111112",
               fontWeight: 800,
               display: "flex",
@@ -50,7 +50,7 @@ export default function OpengraphImage() {
           </div>
           <span
             style={{
-              color: "#1ae57e",
+              color: "#ff3d1f",
               letterSpacing: 4,
               textTransform: "uppercase",
               fontWeight: 700,
@@ -67,7 +67,7 @@ export default function OpengraphImage() {
               letterSpacing: -4,
               textTransform: "uppercase",
               fontWeight: 800,
-              color: "#1ae57e",
+              color: "#ff3d1f",
             }}
           >
             {profile.name}
@@ -84,7 +84,7 @@ export default function OpengraphImage() {
             }}
           >
             <span>{host}</span>
-            <span style={{ color: "#1ae57e" }}>
+            <span style={{ color: "#ff3d1f" }}>
               ON TRACK // PROJETOS · EXPERIÊNCIA · CONTATO
             </span>
           </div>
