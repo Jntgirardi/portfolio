@@ -14,11 +14,12 @@ export function Skills() {
           id="competencias-titulo"
           index="03"
           label="Competências"
+          telemetryTag="TECH STACK // FULL STACK MATRIX"
           title={
             <>
-              Tecnologias e{" "}
+              Domínios e{" "}
               <span className="font-serif italic font-normal text-accent">
-                ferramentas
+                tecnologias
               </span>
             </>
           }
