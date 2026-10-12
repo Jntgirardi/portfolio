@@ -27,25 +27,33 @@ export function CopyEmail({ email }: { email: string }) {
       <button
         type="button"
         onClick={copy}
-        className="inline-flex min-h-11 items-center gap-2.5 rounded-full bg-accent px-5 font-sans text-[13px] font-semibold tracking-tight text-accent-ink shadow-[inset_0_1px_0_rgba(255,255,255,0.3)] transition-colors duration-300 hover:bg-ink"
+        className="shape-blade group relative inline-flex min-h-11 items-stretch overflow-hidden border border-accent bg-accent font-sans text-[13px] font-semibold tracking-tight text-accent-ink transition-all duration-300 hover:border-ink active:scale-[0.98]"
       >
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.span
-            key={copied ? "ok" : "copy"}
-            initial={{ opacity: 0, scale: 0.6 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.6 }}
-            transition={{ duration: 0.18 }}
-            className="inline-flex"
-          >
-            {copied ? (
-              <Check className="size-3.5" aria-hidden="true" />
-            ) : (
-              <Copy className="size-3.5" aria-hidden="true" />
-            )}
-          </motion.span>
-        </AnimatePresence>
-        {copied ? "E-mail copiado!" : "Copiar e-mail"}
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 -translate-x-[108%] -skew-x-12 bg-ink transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0"
+        />
+        <span className="relative z-10 flex items-center px-5 py-2.5">
+          {copied ? "E-mail copiado!" : "Copiar e-mail"}
+        </span>
+        <span className="relative z-10 flex items-center justify-center border-l border-accent-ink/15 bg-black/[0.06] px-3.5">
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.span
+              key={copied ? "ok" : "copy"}
+              initial={{ opacity: 0, scale: 0.6 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.6 }}
+              transition={{ duration: 0.18 }}
+              className="inline-flex"
+            >
+              {copied ? (
+                <Check className="size-3.5" aria-hidden="true" />
+              ) : (
+                <Copy className="size-3.5" aria-hidden="true" />
+              )}
+            </motion.span>
+          </AnimatePresence>
+        </span>
       </button>
       <span role="status" aria-live="polite" className="sr-only">
         {copied ? "E-mail copiado para a área de transferência." : ""}
